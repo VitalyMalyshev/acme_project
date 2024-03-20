@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 # Множество с именами участников Ливерпульской четвёрки.
 BEATLES = {'Джон Леннон', 'Пол Маккартни', 'Джордж Харрисон', 'Ринго Старр'}
 
+
 class BirthdayForm(forms.ModelForm):
 
     class Meta:
