@@ -13,5 +13,5 @@ urlpatterns = [
     path('list/', views.BirthdayListView.as_view(), name='list'),
     # и тут подправили:
     path('<int:pk>/edit/', views.BirthdayUpdateView.as_view(), name='edit'),
-    path('<int:pk>/delete/', views.delete_birthday, name='delete'),
+    path('<int:pk>/delete/', views.BirthdayDeleteView.as_view(), name='delete'),
 ]
