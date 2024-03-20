@@ -1,6 +1,9 @@
 from .forms import BirthdayForm
 from .models import Birthday
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from .utils import calculate_birthday_countdown, get_birthday_for_year
+from django.views.generic import (
+    ListView, CreateView, UpdateView, DeleteView, DetailView,
+)    
 from django.urls import reverse_lazy
 
 
@@ -11,7 +14,7 @@ class BirthdayMixin:
 
 class BirthdayFormMixin:
     form_class = BirthdayForm
-    template_name = 'birthday/birthday.html'
+    template_name = 'birthday/birthday.html' # либо переименовать шаблон в birthday_form.html и удалить
 
 
 class BirthdayCreateView(BirthdayMixin, BirthdayFormMixin, CreateView):
@@ -29,3 +32,19 @@ class BirthdayDeleteView(BirthdayMixin, DeleteView):
 class BirthdayListView(BirthdayMixin, ListView):
     ordering = 'id'
     paginate_by = 10
+
+
+# Новый класс
+class BirthdayDetailView(DetailView):
+    model = Birthday
+
+    def get_context_data(self, **kwargs):
+        # Получаем словарь контекста:
+        context = super().get_context_data(**kwargs)
+        # Добавляем в словарь новый ключ:
+        context['birthday_countdown'] = calculate_birthday_countdown(
+            # Дату рождения берём из объекта в словаре context:
+            self.object.birthday
+        )
+        # Возвращаем словарь контекста.
+        return context
