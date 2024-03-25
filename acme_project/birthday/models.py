@@ -15,7 +15,12 @@ class Birthday(models.Model):
     image = models.ImageField('Фото', upload_to='birthdays_images', blank=True)
 
     class Meta():
-        ...
+        constraints = (
+            models.UniqueConstraint(
+                fields=('first_name', 'last_name', 'birthday'),
+                name='Unique person constraint',
+            ),
+        )
 
     def get_absolute_url(self):
         # С помощью функции reverse() возвращаем URL объекта.
