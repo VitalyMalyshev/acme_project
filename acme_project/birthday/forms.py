@@ -12,7 +12,9 @@ class BirthdayForm(forms.ModelForm):
 
     class Meta:
         model = Birthday
-        fields = '__all__'
+        # Псое создания связи юзера с моделю в models.py, нужно заменить код
+        # fields = '__all__' на: 
+        exclude = ('author',)
         widgets = {
             'birthday': forms.DateInput(attrs={'type': 'date'})
         }
